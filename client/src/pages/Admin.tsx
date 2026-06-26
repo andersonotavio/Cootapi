@@ -28,15 +28,15 @@ function NewsManager() {
   const { data: newsList } = trpc.news.list.useQuery({ limit: 50 });
   const createMutation = trpc.news.create.useMutation({
     onSuccess: () => { toast.success("Notícia criada!"); utils.news.list.invalidate(); setOpen(false); resetForm(); },
-    onError: (e) => toast.error(e.message),
+    onError: (e) => { toast.error((e as { message: string }).message); },
   });
   const updateMutation = trpc.news.update.useMutation({
     onSuccess: () => { toast.success("Notícia atualizada!"); utils.news.list.invalidate(); setOpen(false); resetForm(); },
-    onError: (e) => toast.error(e.message),
+    onError: (e) => { toast.error((e as { message: string }).message); },
   });
   const deleteMutation = trpc.news.delete.useMutation({
     onSuccess: () => { toast.success("Notícia removida!"); utils.news.list.invalidate(); },
-    onError: (e) => toast.error(e.message),
+    onError: (e) => { toast.error((e as { message: string }).message); },
   });
 
   const resetForm = () => { setForm({ title: "", slug: "", summary: "", content: "", imageUrl: "", category: "noticia", published: false }); setEditItem(null); };
@@ -118,7 +118,7 @@ function NewsManager() {
         {!newsList || newsList.length === 0 ? (
           <Card className="text-center py-8"><p className="text-gray-500">Nenhuma notícia cadastrada.</p></Card>
         ) : (
-          newsList.map((item) => (
+          newsList.map((item: any) => (
             <Card key={item.id} className="card-hover">
               <CardContent className="p-4 flex items-center gap-4">
                 {item.imageUrl && <img src={item.imageUrl} alt={item.title} className="w-16 h-16 object-cover rounded-lg flex-shrink-0" />}
@@ -160,15 +160,15 @@ function EventsManager() {
   const { data: eventsList } = trpc.events.list.useQuery({ publicOnly: false });
   const createMutation = trpc.events.create.useMutation({
     onSuccess: () => { toast.success("Evento criado!"); utils.events.list.invalidate(); setOpen(false); resetForm(); },
-    onError: (e) => toast.error(e.message),
+    onError: (e) => { toast.error((e as { message: string }).message); },
   });
   const updateMutation = trpc.events.update.useMutation({
     onSuccess: () => { toast.success("Evento atualizado!"); utils.events.list.invalidate(); setOpen(false); resetForm(); },
-    onError: (e) => toast.error(e.message),
+    onError: (e) => { toast.error((e as { message: string }).message); },
   });
   const deleteMutation = trpc.events.delete.useMutation({
     onSuccess: () => { toast.success("Evento removido!"); utils.events.list.invalidate(); },
-    onError: (e) => toast.error(e.message),
+    onError: (e) => { toast.error((e as { message: string }).message); },
   });
 
   const resetForm = () => { setForm({ title: "", description: "", location: "", startDate: "", startTime: "09:00", endDate: "", endTime: "", isPublic: true }); setEditItem(null); };
@@ -262,7 +262,7 @@ function EventsManager() {
         {!eventsList || eventsList.length === 0 ? (
           <Card className="text-center py-8"><p className="text-gray-500">Nenhum evento cadastrado.</p></Card>
         ) : (
-          eventsList.map((item) => {
+          eventsList.map((item: any) => {
             const start = new Date(item.startDate);
             return (
               <Card key={item.id} className="card-hover">
@@ -307,14 +307,14 @@ function DocumentsManager() {
   const [uploading, setUploading] = useState(false);
 
   const utils = trpc.useUtils();
-  const { data: docsList } = trpc.documents.list.useQuery();
+  const { data: docsList } = trpc.documents.list.useQuery(undefined);
   const createMutation = trpc.documents.upload.useMutation({
     onSuccess: () => { toast.success("Documento enviado!"); utils.documents.list.invalidate(); setOpen(false); resetForm(); setUploading(false); },
-    onError: (e) => { toast.error(e.message); setUploading(false); },
+    onError: (e) => { toast.error((e as { message: string }).message); setUploading(false); },
   });
   const deleteMutation = trpc.documents.delete.useMutation({
     onSuccess: () => { toast.success("Documento removido!"); utils.documents.list.invalidate(); },
-    onError: (e) => toast.error(e.message),
+    onError: (e) => { toast.error((e as { message: string }).message); },
   });
 
   const resetForm = () => { setForm({ title: "", description: "", category: "outro", isPublic: true }); setFile(null); };
@@ -396,7 +396,7 @@ function DocumentsManager() {
         {!docsList || docsList.length === 0 ? (
           <Card className="text-center py-8"><p className="text-gray-500">Nenhum documento cadastrado.</p></Card>
         ) : (
-          docsList.map((doc) => (
+          docsList.map((doc: any) => (
             <Card key={doc.id} className="card-hover">
               <CardContent className="p-4 flex items-center gap-4">
                 <div className="w-10 h-10 rounded-lg bg-cootapi-green-pale flex items-center justify-center flex-shrink-0">
@@ -434,18 +434,18 @@ function InformesManager() {
   const [form, setForm] = useState({ title: "", content: "", imageUrl: "", videoUrl: "", published: true });
 
   const utils = trpc.useUtils();
-  const { data: informesList } = trpc.informes.list.useQuery();
+  const { data: informesList } = trpc.informes.list.useQuery(undefined);
   const createMutation = trpc.informes.create.useMutation({
     onSuccess: () => { toast.success("Informe criado!"); utils.informes.list.invalidate(); setOpen(false); resetForm(); },
-    onError: (e) => toast.error(e.message),
+    onError: (e) => { toast.error((e as { message: string }).message); },
   });
   const updateMutation = trpc.informes.update.useMutation({
     onSuccess: () => { toast.success("Informe atualizado!"); utils.informes.list.invalidate(); setOpen(false); resetForm(); },
-    onError: (e) => toast.error(e.message),
+    onError: (e) => { toast.error((e as { message: string }).message); },
   });
   const deleteMutation = trpc.informes.delete.useMutation({
     onSuccess: () => { toast.success("Informe removido!"); utils.informes.list.invalidate(); },
-    onError: (e) => toast.error(e.message),
+    onError: (e) => { toast.error((e as { message: string }).message); },
   });
 
   const resetForm = () => { setForm({ title: "", content: "", imageUrl: "", videoUrl: "", published: true }); setEditItem(null); };
@@ -512,7 +512,7 @@ function InformesManager() {
         {!informesList || informesList.length === 0 ? (
           <Card className="text-center py-8"><p className="text-gray-500">Nenhum informe cadastrado.</p></Card>
         ) : (
-          informesList.map((item) => (
+          informesList.map((item: any) => (
             <Card key={item.id} className="card-hover">
               <CardContent className="p-4 flex items-center gap-4">
                 <div className="w-10 h-10 rounded-lg bg-cootapi-yellow flex items-center justify-center flex-shrink-0">
@@ -547,11 +547,11 @@ function InformesManager() {
 
 // ─── Applications Management ───────────────────────────────────────────────────
 function ApplicationsManager() {
-  const { data: apps } = trpc.memberApplications.list.useQuery();
+  const { data: apps } = trpc.memberApplications.list.useQuery(undefined);
   const utils = trpc.useUtils();
   const updateStatus = trpc.memberApplications.updateStatus.useMutation({
     onSuccess: () => { toast.success("Status atualizado!"); utils.memberApplications.list.invalidate(); },
-    onError: (e) => toast.error(e.message),
+    onError: (e) => { toast.error((e as { message: string }).message); },
   });
 
   const statusColors: Record<string, string> = {
@@ -567,7 +567,7 @@ function ApplicationsManager() {
         {!apps || apps.length === 0 ? (
           <Card className="text-center py-8"><p className="text-gray-500">Nenhuma inscrição recebida.</p></Card>
         ) : (
-          apps.map((app) => (
+          apps.map((app: any) => (
             <Card key={app.id} className="card-hover">
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-4">
@@ -607,7 +607,7 @@ function ApplicationsManager() {
 
 // ─── Messages Management ───────────────────────────────────────────────────────
 function MessagesManager() {
-  const { data: messages } = trpc.contact.list.useQuery();
+  const { data: messages } = trpc.contact.list.useQuery(undefined);
   const utils = trpc.useUtils();
   const markRead = trpc.contact.markRead.useMutation({
     onSuccess: () => utils.contact.list.invalidate(),
@@ -620,7 +620,7 @@ function MessagesManager() {
         {!messages || messages.length === 0 ? (
           <Card className="text-center py-8"><p className="text-gray-500">Nenhuma mensagem recebida.</p></Card>
         ) : (
-          messages.map((msg) => (
+          messages.map((msg: any) => (
             <Card key={msg.id} className={`card-hover ${!msg.read ? "border-l-4 border-l-cootapi-yellow" : ""}`}>
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-4">
@@ -655,7 +655,7 @@ function MessagesManager() {
 
 // ─── Dashboard Stats ───────────────────────────────────────────────────────────
 function DashboardStats() {
-  const { data: stats } = trpc.admin.stats.useQuery();
+  const { data: stats } = trpc.admin.stats.useQuery(undefined);
 
   const cards = [
     { label: "Notícias", value: stats?.news ?? 0, icon: Newspaper, color: "bg-blue-50 text-blue-600" },

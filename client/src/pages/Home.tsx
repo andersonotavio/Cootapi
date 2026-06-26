@@ -384,7 +384,7 @@ export default function Home() {
           </div>
           {latestNews && latestNews.length > 0 ? (
             <div className="grid md:grid-cols-3 gap-6">
-              {latestNews.map((item) => (
+              {latestNews.map((item: any) => (
                 <Link key={item.id} href={`/noticias/${item.slug}`}>
                   <Card className="h-full card-hover cursor-pointer overflow-hidden">
                     {item.imageUrl && (

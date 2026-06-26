@@ -86,7 +86,7 @@ export default function Noticias() {
 
   const { data: dbNews } = trpc.news.list.useQuery({ limit: 20, published: true });
 
-  const allNews = dbNews && dbNews.length > 0 ? dbNews.map((n) => ({
+  const allNews = dbNews && dbNews.length > 0 ? dbNews.map((n: any) => ({
     id: String(n.id),
     title: n.title,
     category: n.category,
@@ -96,7 +96,7 @@ export default function Noticias() {
     slug: n.slug,
   })) : staticNews;
 
-  const filtered = allNews.filter((item) => {
+  const filtered = allNews.filter((item: any) => {
     const matchCat = category === "all" || item.category === category;
     const matchSearch = !search || item.title.toLowerCase().includes(search.toLowerCase()) || item.summary.toLowerCase().includes(search.toLowerCase());
     return matchCat && matchSearch;
@@ -155,7 +155,7 @@ export default function Noticias() {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((item) => (
+              {filtered.map((item: any) => (
                 <Card key={item.id} className="h-full card-hover overflow-hidden">
                   {item.img && (
                     <img src={item.img} alt={item.title} className="w-full h-48 object-cover" />

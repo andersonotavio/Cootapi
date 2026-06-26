@@ -80,7 +80,7 @@ function UploadDialog({ onSuccess }: { onSuccess: () => void }) {
       onSuccess();
     },
     onError: (err) => {
-      toast.error("Erro ao enviar documento: " + err.message);
+      toast.error("Erro ao enviar documento: " + (err as { message: string }).message);
     },
   });
 
@@ -228,7 +228,7 @@ export default function AreaCooperado() {
     { enabled: isAuthenticated }
   );
 
-  const filteredDocs = documents?.filter((d) =>
+  const filteredDocs = documents?.filter((d: any) =>
     !docSearch || d.title.toLowerCase().includes(docSearch.toLowerCase())
   );
 
@@ -338,7 +338,7 @@ export default function AreaCooperado() {
                     <p className="text-gray-500">Nenhum informe publicado ainda.</p>
                   </Card>
                 ) : (
-                  informes.map((informe) => (
+                  informes.map((informe: any) => (
                     <Card key={informe.id} className="card-hover">
                       <CardContent className="p-6">
                         <div className="flex items-start justify-between gap-4">
@@ -405,7 +405,7 @@ export default function AreaCooperado() {
                   </Card>
                 ) : (
                   <div className="space-y-3">
-                    {filteredDocs.map((doc) => (
+                    {filteredDocs.map((doc: any) => (
                       <DocumentCard key={doc.id} doc={doc} />
                     ))}
                   </div>
@@ -426,7 +426,7 @@ export default function AreaCooperado() {
                   </Card>
                 ) : (
                   <div className="space-y-3">
-                    {events.map((event) => (
+                    {events.map((event: any) => (
                       <EventCard key={event.id} event={event} />
                     ))}
                   </div>
